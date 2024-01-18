@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../services/firebaseConfig";
-import logoImg from "../assets/logo.svg";
 
 function Header() {
   const [user] = useAuthState(auth);
