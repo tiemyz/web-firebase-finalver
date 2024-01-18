@@ -12,63 +12,55 @@ function Login() {
   const [warning, setWarning] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const authInstance = getAuth(); // obter a instância de autenticação do firebase
+  const authInstance = getAuth();
   const [signInWithEmailAndPassword] = useSignInWithEmailAndPassword(authInstance);
   const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(authInstance, (user) => {
       if (user) {
-        // se o usuário estiver autenticado, redirecione para a página desejada
-        navigate("/");
+        // redirecionar apenas se o usuário estiver autenticado e não houver avisos
+        if (!warning) {
+          navigate("/");
+        }
       }
     });
 
     return () => unsubscribe();
-  }, [authInstance, navigate]);
+  }, [authInstance, navigate, warning]);
 
   async function handleSignIn(e) {
     e.preventDefault();
-
-    // caso algum campo não tenha sido preenchido
+  
     if (!email || !password) {
       setWarning("Preencha todos os campos obrigatórios!");
       return;
     }
-
-    // caso o usuário esqueça de colocar o @
+  
     if (!email.includes("@")) {
       setWarning("Digite um email válido.");
       return;
     }
-
+  
     try {
-      // realizar o login
       await signInWithEmailAndPassword(email, password);
-      return;
+      // limpar os campos se o login for bem sucedido
+      setEmail("");
+      setPassword("");
     } catch (error) {
       console.error("Erro ao fazer login:", error.message);
-
-      // verificar o tipo de erro
-      if (error.code === "auth/wrong-password") {
-        setWarning("Senha incorreta. Por favor, tente novamente.");
-      } else if (error.code === "auth/user-not-found") {
-        setWarning(
-          "Este email não está cadastrado. Por favor, faça o seu cadastro ou verifique o email digitado."
-        );
+  
+      if (error.code === "auth/wrong-password" || error.code === "auth/user-not-found") {
+        // se o usuário ou senha estiverem incorretos, exibir um aviso na tela
+        setWarning("Credenciais inválidas. Verifique seu email e senha.");
       } else if (error.code === "auth/invalid-email") {
         setWarning("Email incorreto. Por favor, verifique o email digitado.");
       } else {
-        setWarning("Credenciais inválidas. Verifique seu email e senha.");
+        // qualquer outro erro na aplicação
+        setWarning("Erro ao fazer login. Por favor, tente novamente.");
       }
     } finally {
       setLoading(false);
-
-      // limpar os campos se o login não for bem sucedido
-      if (!warning) {
-        setEmail("");
-        setPassword("");
-      }
     }
   }
 
@@ -85,6 +77,7 @@ function Login() {
             id="email"
             placeholder="user@email.com"
             onChange={(e) => setEmail(e.target.value)}
+            value={email} 
           />
         </div>
 
@@ -96,6 +89,7 @@ function Login() {
             id="password"
             placeholder="*******"
             onChange={(e) => setPassword(e.target.value)}
+            value={password} 
           />
         </div>
 
