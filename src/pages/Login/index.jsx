@@ -3,8 +3,6 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import arrowImg from "../../assets/arrow.svg";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -74,7 +72,6 @@ function Login() {
 
   return (
     <div>
-      <Header />
 
       <form>
         <div>
@@ -113,7 +110,6 @@ function Login() {
         </div>
       </form>
 
-      <Footer />
     </div>
   );
 }
