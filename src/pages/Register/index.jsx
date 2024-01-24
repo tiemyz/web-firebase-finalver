@@ -3,8 +3,6 @@ import { createUserWithEmailAndPassword } from "firebase/auth";
 import { Link, useNavigate } from "react-router-dom";
 import arrowImg from "../../assets/arrow.svg";
 import { auth } from "../../services/firebaseConfig";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
 
 function Register() {
   const [email, setEmail] = useState("");
@@ -62,8 +60,6 @@ function Register() {
 
   return (
     <div>
-      <Header />
-
       <form>
         <div>
           <label htmlFor="email">E-mail</label>
@@ -103,7 +99,6 @@ function Register() {
         </div>
       </form>
 
-      <Footer />
     </div>
   );
 }

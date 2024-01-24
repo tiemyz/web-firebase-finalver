@@ -1,16 +1,19 @@
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { getAuth } from 'firebase/auth';
+//import { getDatabase } from 'firebase/database';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCWzQg8IoJxpzTZBWIlSj1ZVdmpQ_sf1bA",
-  authDomain: "fir-auth-48d3a.firebaseapp.com",
-  projectId: "fir-auth-48d3a",
-  storageBucket: "fir-auth-48d3a.appspot.com",
-  messagingSenderId: "213386031913",
-  appId: "1:213386031913:web:dce33213eaaf44f48f3d38",
-  measurementId: "G-BJKNNBZLRE"
+  apiKey: "AIzaSyCtKpayEXjcgVHj0-kaCddcn8i75IuXCmY",
+  authDomain: "fir-course-f19b6.firebaseapp.com",
+  databaseURL: "https://fir-course-f19b6-default-rtdb.firebaseio.com",
+  projectId: "fir-course-f19b6",
+  storageBucket: "fir-course-f19b6.appspot.com",
+  messagingSenderId: "639782634813",
+  appId: "1:639782634813:web:78b0ab6bacd9900b2d7154",
+  measurementId: "G-RHTL6NZDLQ"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
+//export const googleProvider = new GoogleAuthProvider();
+//export const db = getDatabase(app);
